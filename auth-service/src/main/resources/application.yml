@@ -1,0 +1,24 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: auth-service
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:authdb}
+    username: ${DB_USER:bank}
+    password: ${DB_PASS:bank}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  flyway:
+    enabled: false
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+
+app:
+  jwt:
+    secret: "QzDA+CdJtCsXPG+YO/9y/JluYMxrrsDeJYGrpA6gPhk="
+    ttlSeconds: ${JWT_TTL_SECONDS:3600}

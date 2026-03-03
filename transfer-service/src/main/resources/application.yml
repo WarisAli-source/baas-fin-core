@@ -1,0 +1,32 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: transfer-service
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:transferdb}
+    username: ${DB_USER:bank}
+    password: ${DB_PASS:bank}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  flyway:
+    enabled: false
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP:kafka:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      group-id: transfer-service
+
+grpc:
+  client:
+    ledger:
+      address: static://${LEDGER_GRPC_HOST:ledger-service}:${LEDGER_GRPC_PORT:9090}
+      negotiationType: PLAINTEXT
+
+app:
+  jwt:
+    secret: "QzDA+CdJtCsXPG+YO/9y/JluYMxrrsDeJYGrpA6gPhk="
+  outbox:
+    publishDelayMs: 2000

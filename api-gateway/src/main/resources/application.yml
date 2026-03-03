@@ -1,0 +1,50 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      routes:
+        - id: auth
+          uri: http://auth-service:8081
+          predicates:
+            - Path=/api/v1/auth/**
+
+        - id: account
+          uri: http://account-service:8082
+          predicates:
+            - Path=/api/v1/accounts/**
+
+        - id: transfer
+          uri: http://transfer-service:8083
+          predicates:
+            - Path=/api/v1/transfers/**
+
+        - id: statement
+          uri: http://statement-service:8084
+          predicates:
+            - Path=/api/v1/statements/**,/api/v1/admin/**
+
+        - id: analytics
+          uri: http://analytics-service:8085
+          predicates:
+            - Path=/api/v1/metrics/**
+
+        - id: audit
+          uri: http://audit-service:8086
+          predicates:
+            - Path=/api/v1/audit/**
+
+app:
+  jwt:
+    secret: "QzDA+CdJtCsXPG+YO/9y/JluYMxrrsDeJYGrpA6gPhk="
+
+# enable actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

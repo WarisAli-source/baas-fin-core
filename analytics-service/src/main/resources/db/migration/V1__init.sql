@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS metrics_counter (
+  metric VARCHAR(64) PRIMARY KEY,
+  value BIGINT NOT NULL,
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);

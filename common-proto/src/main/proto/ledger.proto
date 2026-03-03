@@ -1,0 +1,57 @@
+syntax = "proto3";
+package ledger;
+
+option java_multiple_files = true;
+option java_package = "com.waris.bank.proto.ledger";
+option java_outer_classname = "LedgerProto";
+
+message Money {
+  int64 amount_paise = 1;
+}
+
+enum BalanceType {
+  AVAILABLE = 0;
+  CURRENT = 1;
+}
+
+message GetBalanceRequest {
+  string account_id = 1;
+  BalanceType type = 2;
+}
+
+message GetBalanceResponse {
+  string account_id = 1;
+  Money balance = 2;
+}
+
+message PostTransferRequest {
+  string txn_id = 1;
+  string from_account_id = 2;
+  string to_account_id = 3;
+  Money amount = 4;
+  string narrative = 5;
+}
+
+message PostTransferResponse {
+  string txn_id = 1;
+  string status = 2; // POSTED / DUPLICATE / FAILED
+}
+
+message PostAdjustmentRequest {
+  string txn_id = 1;
+  string account_id = 2;
+  Money amount = 3;
+  string direction = 4; // CREDIT or DEBIT
+  string reason = 5;
+}
+
+message PostAdjustmentResponse {
+  string txn_id = 1;
+  string status = 2;
+}
+
+service LedgerService {
+  rpc GetBalance(GetBalanceRequest) returns (GetBalanceResponse);
+  rpc PostTransfer(PostTransferRequest) returns (PostTransferResponse);
+  rpc PostAdjustment(PostAdjustmentRequest) returns (PostAdjustmentResponse);
+}
