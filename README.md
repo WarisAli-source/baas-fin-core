@@ -124,3 +124,23 @@ The following capabilities are still pending across services:
 ## Notes
 - Service-level details and endpoints are documented in each service `README.md`.
 - This repository currently optimizes for demonstrating architecture and domain flow over production-grade hardening.
+
+## Frontend (React Banking Console)
+A production-style React UI is available in `frontend/` with:
+- Login + signup authentication screens
+- User dashboard for account balances and account states
+- Transfer initiation workflow
+- Past transaction lookup via statement API
+- Admin analytics with metrics trend + recent audit table
+
+### Run frontend locally
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Set API base URL if needed:
+```bash
+VITE_API_BASE_URL=http://localhost:8080 npm run dev
+```
